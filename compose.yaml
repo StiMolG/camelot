@@ -1,1 +1,14 @@
 services:
+  postgres:
+    image: 'postgres:latest'
+    restart: unless-stopped
+    environment:
+      - 'POSTGRES_DB=camelot'
+      - 'POSTGRES_PASSWORD=camelot2024'
+      - 'POSTGRES_USER=camelot'
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/data/postgres
+volumes:
+  pgdata:

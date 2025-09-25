@@ -1,0 +1,30 @@
+# Compilados de Java
+*.class
+
+# Archivos de log
+*.log
+
+# Directorios de dependencias
+target/
+bin/
+out/
+
+# Archivos generados por IDEs
+*.iml
+.idea/
+*.ipr
+*.iws
+*.sw?
+*.sublime-workspace
+*.sublime-project
+.vscode/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de configuración de Gradle/Maven
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+.mvn/
