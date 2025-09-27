@@ -25,11 +25,43 @@ repositories {
 }
 
 dependencies {
+    // Spring Boot Web (para exponer la API REST)
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Spring Boot Data JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Lombok para reducir código boilerplate
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
-    runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // H2 Database para desarrollo y pruebas
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+
+    // Base de datos - PostgreSQL en producción
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.postgresql:postgresql'
+
+
+
+    // Seguridad con Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // JWT para autenticación
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    // Validaciones
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // mapStruct
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+
+    // Test
+    testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
