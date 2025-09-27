@@ -28,3 +28,7 @@ Thumbs.db
 build/
 !gradle/wrapper/gradle-wrapper.jar
 .mvn/
+
+
+# Agregar el properties de dev en el git.gitignore
+src/main/resources/application-dev.properties
