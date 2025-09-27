@@ -9,6 +9,8 @@ import com.camelot.domain.model.User;
 import com.camelot.domain.model.UserId;
 import com.camelot.domain.repository.ProductRepository;
 import com.camelot.domain.repository.UserRepository;
+import com.camelot.infrastructure.persistence.entity.UserEntity;
+import com.camelot.infrastructure.persistence.jpa.UserJpaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,21 +40,19 @@ public class ApplicationConfig {
 
 
     @Bean
-    public CommandLineRunner init(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public CommandLineRunner init(UserJpaRepository userJpaRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            if (userRepository.findByUsername("admin").isEmpty()) {
-                User admin = new User(
-                        new UserId(new UUID(
-0L, 1L
-                        )), // o UUID si así lo manejas
-                        "admin",
-                        "admin@mail.com",
-                        passwordEncoder.encode("1234"),
-                        Set.of(Role.ADMIN) // 👈 directamente inicializado
-                );
-                System.out.println("✅ Usuario admin creado: admin / 1234");
+            if (userJpaRepository.findByUsername("admin").isEmpty()) {
+                UserEntity adminEntity = new UserEntity();
+                adminEntity.setId(null);
+                adminEntity.setUsername("admin");
+                adminEntity.setPassword(passwordEncoder.encode("1234")); // 🔐 BCrypt
+                adminEntity.setRoles(Set.of(Role.ADMIN, Role.USER));
+                userJpaRepository.save(adminEntity); // ✅ guarda de verdad en la BD
+                System.out.println("✅ Usuario admin creado en BD: admin / 1234");
             }
         };
     }
+
 
 }
