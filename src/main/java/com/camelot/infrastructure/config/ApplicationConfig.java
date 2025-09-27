@@ -42,14 +42,14 @@ public class ApplicationConfig {
     @Bean
     public CommandLineRunner init(UserJpaRepository userJpaRepository, PasswordEncoder passwordEncoder) {
         return args -> {
-            if (userJpaRepository.findByUsername("admin").isEmpty()) {
+            if (userJpaRepository.findByUsername("stmolinag").isEmpty()) {
                 UserEntity adminEntity = new UserEntity();
                 adminEntity.setId(null);
-                adminEntity.setUsername("admin");
-                adminEntity.setPassword(passwordEncoder.encode("1234")); // 🔐 BCrypt
+                adminEntity.setEmail("stmolinag@gmail.com");
+                adminEntity.setUsername("stmolinag");
+                adminEntity.setPassword(passwordEncoder.encode("Lancelot1509.")); // 🔐 BCrypt
                 adminEntity.setRoles(Set.of(Role.ADMIN, Role.USER));
                 userJpaRepository.save(adminEntity); // ✅ guarda de verdad en la BD
-                System.out.println("✅ Usuario admin creado en BD: admin / 1234");
             }
         };
     }
