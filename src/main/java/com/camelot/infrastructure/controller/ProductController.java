@@ -4,6 +4,8 @@ import com.camelot.application.usecase.product.DeleteProductUseCase;
 import com.camelot.application.usecase.product.GetAllProductsUseCase;
 import com.camelot.domain.model.Product;
 import com.camelot.domain.model.ProductId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +17,7 @@ public class ProductController {
 
     private final GetAllProductsUseCase getAllProducts;
     private final DeleteProductUseCase deleteProduct;
+    private static final Logger log = LoggerFactory.getLogger(ProductController.class);
 
     public ProductController(GetAllProductsUseCase getAllProducts, DeleteProductUseCase deleteProduct) {
         this.getAllProducts = getAllProducts;
@@ -23,7 +26,10 @@ public class ProductController {
 
     @GetMapping
     public List<Product> getAll() {
-        return getAllProducts.execute();
+        log.info("getAll start");
+        List<Product> result = getAllProducts.execute();
+        log.info("getAll success count={}", result.size());
+        return result;
     }
 
     @GetMapping("/test")
@@ -33,6 +39,8 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable UUID id) {
+        log.info("delete start id={}", id);
         deleteProduct.execute(new ProductId(id));
+        log.info("delete success id={}", id);
     }
 }

@@ -2,6 +2,8 @@ package com.camelot.infrastructure.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -18,18 +20,22 @@ public class JwtProvider {
 
     private final Key key;
     private final long expirationMs = 3600000; // 1h
+    private static final Logger log = LoggerFactory.getLogger(JwtProvider.class);
 
     public JwtProvider(@Value("${jwt.secret}") String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(String username) {
-        return Jwts.builder()
+        log.info("JwtProvider.generateToken start username={}", username);
+        String token = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24h
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+        log.info("JwtProvider.generateToken success username={}", username);
+        return token;
     }
 
     public String getUsername(String token) {
