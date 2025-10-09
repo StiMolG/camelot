@@ -5,20 +5,20 @@ import com.camelot.application.usecase.product.DeleteProductUseCase;
 import com.camelot.application.usecase.product.GetAllProductsUseCase;
 import com.camelot.application.usecase.user.RegisterUserUseCase;
 import com.camelot.domain.model.Role;
-import com.camelot.domain.model.User;
-import com.camelot.domain.model.UserId;
 import com.camelot.domain.repository.ProductRepository;
 import com.camelot.domain.repository.UserRepository;
 import com.camelot.infrastructure.persistence.entity.UserEntity;
 import com.camelot.infrastructure.persistence.jpa.UserJpaRepository;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Configuration
 public class ApplicationConfig {
@@ -52,6 +52,19 @@ public class ApplicationConfig {
                 userJpaRepository.save(adminEntity); // ✅ guarda de verdad en la BD
             }
         };
+    }
+
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Camelot API")
+                        .description("Documentación de la API de Camelot")
+                        .version("v1")
+                        .contact(new Contact().name("Equipo Camelot").email("soporte@camelot.local"))
+                        .license(new License().name("Apache 2.0"))
+                );
     }
 
 
